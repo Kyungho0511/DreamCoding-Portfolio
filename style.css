@@ -11,6 +11,7 @@
   --color-yellow: #fff7d1;
   --color-orange: #feb546;
   --color-black: #000000;
+  --color-white: white;
 
   /* Font size */
   --font-large: 48px;
@@ -43,12 +44,18 @@ body {
 
 a {
   text-decoration: none;
-  color: white;
+  color: var(--color-white);
 }
 
 ul {
   list-style: none;
   padding-left: 0;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
 }
 
 
@@ -88,7 +95,7 @@ p {
   justify-content: space-between;
   background-color: var(--color-pink);
   align-items: center;
-  color: white;
+  color: var(--color-white);
   padding: 16px;
 }
 
@@ -114,4 +121,34 @@ p {
 
 .navbar__menu__item:hover {
   background-color: var(--color-dark-pink);
+}
+
+
+/* Home */
+#home {
+  background: url("images/home_background_12930ad7e0.png") center/cover no-repeat;
+  padding: 40px;
+  text-align: center;
+}
+
+.home__avatar {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+}
+
+.home__title,
+.home__description {
+  color: var(--color-white);
+}
+
+.home__contact {
+  color: var(--color-white);
+  font-size: var(--font-regular);
+  font-weight: var(--weight-bold);
+  margin: 24px;
+  padding: 8px 12px;
+  border: 2px solid var(--color-white);
+  border-radius: var(--size-border-radius);
 }
