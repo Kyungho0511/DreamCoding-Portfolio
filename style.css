@@ -348,12 +348,22 @@ flex-basis: 40%;
   top: -20px;
   left: 4px;
   opacity: 0;
+  pointer-events: none;
 }
 
 .work__projects {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  opacity: 1;
+  transition: all var(--animation-duration) ease;
+}
+
+.work__projects.anim-out {
+  opacity: 0;
+  scale: 0.95;
+  transform: translateY(30px);
 }
 
 .project {
@@ -364,6 +374,10 @@ flex-basis: 40%;
   width: 280px;
   height: 250px;
   margin: 2px;
+}
+
+.project.hidden {
+  display: none;
 }
 
 .project__img {

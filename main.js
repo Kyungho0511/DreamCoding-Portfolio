@@ -15,9 +15,9 @@ document.addEventListener('scroll', () => {
 const navbarMenu = document.querySelector('.navbar__menu');
 navbarMenu.addEventListener('click', event => {
     const menu = event.target.dataset.menu;
+    if (menu == null || menu == undefined) return;
     document.querySelector('.navbar__menu__item.active').classList.remove('active');
     event.target.classList.add('active');
-    if (!menu) return;
     scrollIntoView(menu);
 });
 
@@ -53,4 +53,29 @@ document.addEventListener('scroll', () => {
         arrow.classList.remove('visible');
     }
 });
+
+// Project filtering
+const categories = document.querySelector('.work__categories');
+const workProjects = document.querySelector('.work__projects');
+const projects = document.querySelectorAll('.project');
+categories.addEventListener('click', event => {
+    const target = event.target;
+    const category = target.dataset.category;
+    if (category == null || category == undefined) return;
+    document.querySelector('.category__btn.active').classList.remove('active');
+    target.classList.add('active');
+    workProjects.classList.add('anim-out');
+    setTimeout(() => {
+        projects.forEach(project => {
+            if (project.classList.contains(category)) {
+                project.classList.remove('hidden');
+            } else {
+                project.classList.add('hidden');
+            }
+        });
+        workProjects.classList.remove('anim-out');
+    }, 300);
+});
+
+
 
