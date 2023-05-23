@@ -14,13 +14,68 @@ document.addEventListener('scroll', () => {
 // Navbar menu item buttons scroll to the section
 const navbarMenu = document.querySelector('.navbar__menu');
 navbarMenu.addEventListener('click', event => {
-    const menu = event.target.dataset.menu;
+    const target = event.target;
+    const menu = target.dataset.menu;
     if (menu == null || menu == undefined) return;
-    document.querySelector('.navbar__menu__item.active').classList.remove('active');
-    event.target.classList.add('active');
     navbarMenu.classList.remove('active');
     scrollIntoView(menu);
 });
+
+// Navbar menu item is highlighted as user scrolls through sections
+const sectionIds = [
+    '#home', 
+    '#about', 
+    '#skills', 
+    '#work', 
+    '#testimonials', 
+    '#contact',
+];
+const sections = sectionIds.map(id => document.querySelector(id));
+const navItems = sectionIds.map(id => document.querySelector(`[data-menu="${id}"]`));
+
+let selectedNavIndex;
+let selectedNavItem = navItems[0];
+
+function selectNavItem(selected) {
+    selectedNavItem.classList.remove('active');
+    selectedNavItem = selected;
+    selectedNavItem.classList.add('active');
+}
+
+function scrollIntoView(selector) {
+    const scrollTo = document.querySelector(selector);
+    scrollTo.scrollIntoView({ behavior: 'smooth' });
+    selectNavItem(navItems[sectionIds.indexOf(selector)]);
+}
+
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.3,
+};
+const observerCallback = (entries, observer) => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting && entry.intersectionRatio > 0) {
+            const index = sectionIds.indexOf(`#${entry.target.id}`);
+            // when scrolling down
+            if (entry.boundingClientRect.y < 0) {
+                selectedNavIndex = index + 1;
+            } else { // when scrolling up
+                selectedNavIndex = index - 1;
+            }
+        }
+    });
+};
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+sections.forEach(section => observer.observe(section));
+window.addEventListener('wheel', () => {
+    if(window.scrollY === 0) {
+        selectedNavIndex = 0;
+    } else if (window.scrollY + window.innerHeight === document.body.clientHeight) {
+        selectedNavIndex = navItems.length - 1;
+    }
+    selectNavItem(navItems[selectedNavIndex]);
+})
 
 // Navbar toggle button for mobile screens
 const toggleBtn = document.querySelector('.navbar__toggle-btn');
@@ -33,11 +88,6 @@ const contactMe = document.querySelector('.home__contact');
 contactMe.addEventListener('click', () => {
     scrollIntoView('#contact');
 });
-
-function scrollIntoView(selector) {
-    const scrollTo = document.querySelector(selector);
-    scrollTo.scrollIntoView({ behavior: 'smooth' });
-}
 
 // Scrolling down makes home section gradually transparent
 const home = document.querySelector('.home__container');
