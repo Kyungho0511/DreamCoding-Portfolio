@@ -39,3 +39,18 @@ document.addEventListener('scroll', () => {
     let opacity = 1 - window.scrollY / homeHeight;
     home.style.opacity = opacity;
 }); 
+
+// Arrow up button scroll to home
+const arrow = document.querySelector('.arrowup-btn');
+arrow.addEventListener('click', () => {
+    scrollIntoView('#home');
+});
+
+document.addEventListener('scroll', () => {
+    if (window.scrollY / homeHeight > 0.5) {
+        arrow.classList.add('visible');
+    } else {
+        arrow.classList.remove('visible');
+    }
+});
+
