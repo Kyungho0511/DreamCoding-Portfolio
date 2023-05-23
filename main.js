@@ -11,7 +11,7 @@ document.addEventListener('scroll', () => {
     }
 });
 
-// navbar menu item buttons scroll to the section
+// Navbar menu item buttons scroll to the section
 const navbarMenu = document.querySelector('.navbar__menu');
 navbarMenu.addEventListener('click', event => {
     const menu = event.target.dataset.menu;
@@ -21,7 +21,7 @@ navbarMenu.addEventListener('click', event => {
     scrollIntoView(menu);
 });
 
-// contact me button scroll to the section
+// Contact me button scroll to the section
 const contactMe = document.querySelector('.home__contact');
 contactMe.addEventListener('click', () => {
     scrollIntoView('#contact');
@@ -31,3 +31,11 @@ function scrollIntoView(selector) {
     const scrollTo = document.querySelector(selector);
     scrollTo.scrollIntoView({ behavior: 'smooth' });
 }
+
+// Scrolling down makes home section gradually transparent
+const home = document.querySelector('.home__container');
+const homeHeight = home.getBoundingClientRect().height;
+document.addEventListener('scroll', () => {
+    let opacity = 1 - window.scrollY / homeHeight;
+    home.style.opacity = opacity;
+}); 
