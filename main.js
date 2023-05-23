@@ -1,6 +1,6 @@
 'use strict';
 
-// Make navbar transparnet when it is on the top
+// Navbar becomes transparnet when it is on the top
 const navbar = document.querySelector('#navbar');
 const navbarHeight = navbar.getBoundingClientRect().height;
 document.addEventListener('scroll', () => {
@@ -18,7 +18,14 @@ navbarMenu.addEventListener('click', event => {
     if (menu == null || menu == undefined) return;
     document.querySelector('.navbar__menu__item.active').classList.remove('active');
     event.target.classList.add('active');
+    navbarMenu.classList.remove('active');
     scrollIntoView(menu);
+});
+
+// Navbar toggle button for mobile screens
+const toggleBtn = document.querySelector('.navbar__toggle-btn');
+toggleBtn.addEventListener('click', () => {
+    navbarMenu.classList.toggle('active');
 });
 
 // Contact me button scroll to the section
@@ -76,6 +83,4 @@ categories.addEventListener('click', event => {
         workProjects.classList.remove('anim-out');
     }, 300);
 });
-
-
 
